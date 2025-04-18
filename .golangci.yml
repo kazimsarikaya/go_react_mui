@@ -1,18 +1,25 @@
+version: "2"
 run:
-  timeout: 2m
   tests: true
-
 linters:
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
   enable:
-    - govet
-    - staticcheck
-    - gosimple
-    - errcheck
     - gofmt
     - goimports
-
-linters-settings:
-  gofmt:
-    simplify: true
-    # Fail if tabs are used
-    tab_width: 0  # Optional; gofmt defaults to 8, but Go always formats using tabs unless forced
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
