@@ -1,4 +1,4 @@
-name: CI
+name: 'Checks'
 
 on:
   pull_request:
@@ -52,22 +52,7 @@ jobs:
         with:
           version: latest
           args: --timeout=5m
-
-      - name: Check GPG signed commits
-        run: |
-          git log origin/main..HEAD --pretty=format:%G? | grep -v 'G' && {
-            echo "❌ Some commits are not GPG signed";
-            exit 1;
-          } || echo "✅ All commits are GPG signed"
-
-      - name: Check Signed-off-by (DCO)
-        run: |
-          missing=$(git log origin/main..HEAD | grep -E '^commit|^Signed-off-by:' | awk '/^commit/ {c=$2; next} !/^Signed-off-by:/ {print c}' | sort -u)
-          if [ -n "$missing" ]; then
-            echo "❌ The following commits are missing Signed-off-by:"
-            echo "$missing"
-            exit 1
-          else
-            echo "✅ All commits are signed off (DCO)"
-          fi
+      
+      - name: Check PR commits signed off
+        uses: live627/check-pr-signoff-action@v1.0.0
 
