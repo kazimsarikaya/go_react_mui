@@ -31,6 +31,8 @@ echo "🧹 Tidying Go modules..."
 go mod tidy
 
 # lint the project
+echo "🔧 Setting up golangci-lint..."
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.1.2
 echo "🔍 Linting the project..."
 golangci-lint run --fix
 
