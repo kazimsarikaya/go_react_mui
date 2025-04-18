@@ -35,10 +35,6 @@ jobs:
           cd frontend
           npm run lint
 
-      - name: Run Go Linter
-        run: |
-          go install github.com/mgechev/revive@latest
-          revive -config revive.toml ./...
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
