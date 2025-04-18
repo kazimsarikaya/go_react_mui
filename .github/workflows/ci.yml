@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for full commit history (for GPG/DCO checks)
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Install dependencies (frontend)
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run ESLint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Run Go Linter
+        run: |
+          go install github.com/mgechev/revive@latest
+          revive -config revive.toml ./...
+
+      - name: Check GPG signed commits
+        run: |
+          git log origin/main..HEAD --pretty=format:%G? | grep -v 'G' && {
+            echo "❌ Some commits are not GPG signed";
+            exit 1;
+          } || echo "✅ All commits are GPG signed"
+
+      - name: Check Signed-off-by (DCO)
+        run: |
+          missing=$(git log origin/main..HEAD | grep -E '^commit|^Signed-off-by:' | awk '/^commit/ {c=$2; next} !/^Signed-off-by:/ {print c}' | sort -u)
+          if [ -n "$missing" ]; then
+            echo "❌ The following commits are missing Signed-off-by:"
+            echo "$missing"
+            exit 1
+          else
+            echo "✅ All commits are signed off (DCO)"
+          fi
+
