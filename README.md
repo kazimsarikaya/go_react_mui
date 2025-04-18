@@ -7,3 +7,4 @@ To setup please run the following commands:
 ```bash
 ./setup.sh
 ```
+This script changes go module name, installs hooks, also installs golangci-lint.
