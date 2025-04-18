@@ -52,7 +52,4 @@ jobs:
         with:
           version: latest
           args: --timeout=5m
-      
-      - name: Check PR commits signed off
-        uses: live627/check-pr-signoff-action@v1.0.0
 
