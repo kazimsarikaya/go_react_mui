@@ -37,17 +37,17 @@ jobs:
 
       - name: Generate static.go
         run: |
-mkdir -p internal/static
-cat > internal/static/static.go <<EOF
-package static
+          mkdir -p internal/static
+          cat > internal/static/static.go <<EOF
+          package static
 
-import (
-    "embed"
-)
+          import (
+              "embed"
+          )
 
-//go:embed *
-var Static embed.FS
-EOF
+          //go:embed *
+          var Static embed.FS
+          EOF
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
