@@ -32,9 +32,7 @@ COPY --from=frontend-builder /app/frontend/dist/ ./internal/static/
 RUN cat > ./internal/static/static.go <<EOF
 package static
 
-import (
-    "embed"
-)
+import "embed"
 
 //go:embed *
 var Static embed.FS

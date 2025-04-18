@@ -39,9 +39,7 @@ if [ "x$cmd" == "xbuild" ]; then
       cat > ./internal/static/static.go <<EOF
 package static
 
-import (
-    "embed"
-)
+import "embed"
 
 //go:embed *
 var Static embed.FS

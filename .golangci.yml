@@ -11,3 +11,8 @@ linters:
     - gofmt
     - goimports
 
+linters-settings:
+  gofmt:
+    simplify: true
+    # Fail if tabs are used
+    tab_width: 0  # Optional; gofmt defaults to 8, but Go always formats using tabs unless forced
