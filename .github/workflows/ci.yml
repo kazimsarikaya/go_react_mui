@@ -39,6 +39,11 @@ jobs:
         run: |
           go install github.com/mgechev/revive@latest
           revive -config revive.toml ./...
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          args: --timeout=5m
 
       - name: Check GPG signed commits
         run: |
