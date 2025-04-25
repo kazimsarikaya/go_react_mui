@@ -1,4 +1,7 @@
 name: 'Checks'
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   pull_request:
@@ -46,6 +49,11 @@ jobs:
           //go:embed *
           var Static embed.FS
           EOF
+
+      - name: Install dependencies (backend)
+        run: |
+          go mod tidy
+          go mod vendor
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v7.0.0
