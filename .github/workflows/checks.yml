@@ -49,6 +49,8 @@ jobs:
           //go:embed *
           var Static embed.FS
           EOF
+          go mod tidy
+          go mod vendor
 
       - name: Install dependencies (backend)
         run: |
