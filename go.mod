@@ -2,7 +2,8 @@
 // Please read and understand latest version of Licence.
 module github.com/kazimsarikaya/go_react_mui
 
-go 1.23
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
