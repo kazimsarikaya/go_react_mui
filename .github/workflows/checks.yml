@@ -46,6 +46,8 @@ jobs:
           //go:embed *
           var Static embed.FS
           EOF
+          go mod tidy
+          go mod vendor
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v7.0.0
